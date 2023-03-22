@@ -1,0 +1,59 @@
+when is the delivery date ?
+
+In 15 Day
+
+Which Tasks Could Be Delayed Without Delaying The Schedule ?
+
+Task C & D & F
+
+====================================
+
+Day 1 :
+
+start task A
+
+Day 2 :
+
+Day 3 : 
+
+End   Task A	
+Start Task B
+Start Task C
+
+Day 4 :
+
+End Task C
+Start Task E
+Start Task F
+End Task E
+
+Day 5 :
+
+End Task F
+
+Day 6 :
+
+End Task B
+Start Task D
+
+Day 7  :
+Day 8  :
+Day 9  :
+Day 10 :
+
+End Task D
+Start Task G
+
+Day 11 :
+Day 12 :
+Day 13 :
+
+End Task G
+Start Task H
+
+Day 14 :
+Day 15 :
+
+End Task H
+
+

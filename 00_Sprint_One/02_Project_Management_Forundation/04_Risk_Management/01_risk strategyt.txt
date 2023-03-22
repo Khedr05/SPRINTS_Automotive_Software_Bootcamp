@@ -1,0 +1,34 @@
+
+
+1 - slow response from customer						Avoid				
+[schaduling periodic meeting]
+
+2 - slow response from sponser						Avoid
+[schaduling periodic meeting]
+
+3 - partner does not want to cooperate  			Mitigate			
+[cooperate with anthoer partners]
+
+4 - conflict with team membar   					Accept  			
+[commitment with our team charter]
+
+5 - rejection from Monitor & Evaluation Team  		Mitigate		    
+[make the team know all issues in this project periodically & schaduling periodic meeting]
+
+6 - rejection from central bank   					Mitigate 
+[Provide better financial offers]
+
+7 - payment networks companies    					Mitigate 
+[cooperate with anthoer payment network companies]
+
+8 - rigging competitors			  					Avoid	 
+[Make offers that benefit them]
+
+9 - compelling circumstances	 					Accept   
+[We Can Work From Home For This Time]
+
+10 - App Fuilar					  					Avoid	 
+[relase a prototype for end users and take survey from users about the prototype]
+
+11 - No Client Interst To The App					Mitigate 
+[Markting Team Must Make awareness campaign]

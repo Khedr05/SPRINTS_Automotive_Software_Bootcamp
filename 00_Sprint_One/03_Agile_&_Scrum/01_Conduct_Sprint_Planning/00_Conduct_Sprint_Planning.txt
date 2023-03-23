@@ -1,0 +1,9 @@
+
+
+- Set Fixed Time For Sprint Like bi-weekly
+- Set The Next Feature To Deliver In The Next Sprint
+- Deliver valuable Software In Each Sprint  
+- Decided The Capacity Of The Team 
+- Decided The Role Of All Members Of The Team
+- Decided The Product Backlog As Adding Epic & User Story & Priority Of Each User Story
+- Assign Different Backlog To Suitable Team Member Demand On His Skills In The Team

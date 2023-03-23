@@ -4,7 +4,7 @@ In 20 Day
 
 Which Tasks Could Be Delayed Without Delaying The Schedule ?
 
-Task C & D & F
+Task C & E & F
 
 ====================================
 Day 1 :

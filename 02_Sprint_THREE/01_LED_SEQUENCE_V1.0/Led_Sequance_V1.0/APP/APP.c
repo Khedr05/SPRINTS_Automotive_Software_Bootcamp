@@ -135,7 +135,7 @@ void appmain(void)
 			LED_turn_off(&led1);
 			LED_turn_off(&led2);
 			LED_turn_off(&led3);
-			pressCounterFlag = 0;
+			pressCounterFlag = ZERO_PRESS;
 		}
 		else
 		{

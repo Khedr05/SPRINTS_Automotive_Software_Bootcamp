@@ -1,0 +1,14 @@
+
+#ifndef MCAL_ATMEGA32_TMR_TMR_CONFIG_H_
+#define MCAL_ATMEGA32_TMR_TMR_CONFIG_H_
+
+
+// TCCR0 PINS
+#define CS10_PIN		0
+#define CS11_PIN		1
+#define CS12_PIN		2
+
+
+
+
+#endif /* MCAL_ATMEGA32_TMR_TMR_CONFIG_H_ */

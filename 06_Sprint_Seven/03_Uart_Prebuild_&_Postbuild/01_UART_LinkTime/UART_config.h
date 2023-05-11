@@ -16,6 +16,8 @@
 
 /* Section : Macro Declarations */
 
+#define MAX_UART_SIZE		1
+
 /* Section : Macro Functions Declarations */
 
 /* Section : Data Type Declarations */
@@ -66,6 +68,17 @@ typedef enum{
 	UART_SYNCHRONOUS,
 	UART_ASYNCHRONOUS
 }EN_UART_ClkMode_tcfg;
+
+typedef struct{
+	EN_CharSize_tcfg		GLOBAL_tcfgCharSize;
+	EN_ParityState_tcfg		GLOBAL_tcfgParityState;
+	EN_StopBitsNum_tcfg		GLOBAL_tcfgStopBits;
+	EN_UARTInterrupt_tcfg	GLOBAL_tcfgUartInterrupt;
+	EN_UARTBaudRate2X_tcfg	GLOBAL_tcfgUartBaudRate2X;
+	EN_UARTBaudRate1X_tcfg	GLOBAL_tcfgUartBaudRate1X;
+	EN_UART_ClkMode_tcfg	GLOBAL_tcfgUartClkMode;
+	EN_UARTCommMode_tcfg	GLOBAL_tcfgUartCommMode;
+}ST_UART_tcfgInitialize;
 
 /* Section : Function Declarations */
 

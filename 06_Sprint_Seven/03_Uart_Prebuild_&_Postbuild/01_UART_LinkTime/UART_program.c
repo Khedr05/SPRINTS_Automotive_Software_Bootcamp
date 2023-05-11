@@ -1,87 +1,90 @@
 
 
 #include "UART_interface.h"
+#include "UART_config.c"
 
-void UART_vInit(const ST_UART_tcfgInitialize *LOCAL_tcfgUART){
+extern const ST_UART_tcfgInitialize UART_arr[MAX_UART_SIZE];
+
+void UART_vInit(u8 deviceNumber){
 
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgCharSize == CHAR_5_BITS){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgCharSize == CHAR_5_BITS){
 		CLR_BIT(UCSRC_REG, UCSZ0_BIT);
 		CLR_BIT(UCSRC_REG, UCSZ1_BIT);
 		CLR_BIT(UCSRB_REG, UCSZ2_BIT);
 	}
-	else if((LOCAL_tcfgUART->GLOBAL_tcfgCharSize == CHAR_6_BITS)){
+	else if((UART_arr[deviceNumber].GLOBAL_tcfgCharSize == CHAR_6_BITS)){
 		SET_BIT(UCSRC_REG, UCSZ0_BIT);
 		CLR_BIT(UCSRC_REG, UCSZ1_BIT);
 		CLR_BIT(UCSRB_REG, UCSZ2_BIT);
 
 	}
-	else if((LOCAL_tcfgUART->GLOBAL_tcfgCharSize == CHAR_7_BITS)){
+	else if((UART_arr[deviceNumber].GLOBAL_tcfgCharSize == CHAR_7_BITS)){
 		CLR_BIT(UCSRC_REG, UCSZ0_BIT);
 		SET_BIT(UCSRC_REG, UCSZ1_BIT);
 		CLR_BIT(UCSRB_REG, UCSZ2_BIT);
 
 	}
-	else if((LOCAL_tcfgUART->GLOBAL_tcfgCharSize == CHAR_8_BITS)){
+	else if((UART_arr[deviceNumber].GLOBAL_tcfgCharSize == CHAR_8_BITS)){
 		SET_BIT(UCSRC_REG, UCSZ0_BIT);
 		SET_BIT(UCSRC_REG, UCSZ1_BIT);
 		CLR_BIT(UCSRB_REG, UCSZ2_BIT);
 	}
-	else if((LOCAL_tcfgUART->GLOBAL_tcfgCharSize == CHAR_9_BITS)){
+	else if((UART_arr[deviceNumber].GLOBAL_tcfgCharSize == CHAR_9_BITS)){
 		SET_BIT(UCSRC_REG, UCSZ0_BIT);
 		SET_BIT(UCSRC_REG, UCSZ1_BIT);
 		SET_BIT(UCSRB_REG, UCSZ2_BIT);
 	}
 	else { /* Do Nothing */ }
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgParityState == PARITY_DISABLED){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgParityState == PARITY_DISABLED){
 		CLR_BIT(UCSRC_REG, UPM0_BIT);
 		CLR_BIT(UCSRC_REG, UPM1_BIT);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgParityState == PARITY_EVEN){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgParityState == PARITY_EVEN){
 		CLR_BIT(UCSRC_REG, UPM0_BIT);
 		SET_BIT(UCSRC_REG, UPM1_BIT);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgParityState == PARITY_ODD){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgParityState == PARITY_ODD){
 		SET_BIT(UCSRC_REG, UPM0_BIT);
 		SET_BIT(UCSRC_REG, UPM1_BIT);
 	}
 	else { /* Do Nothing */ }
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgStopBits == STOP_BITS_1){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgStopBits == STOP_BITS_1){
 		CLR_BIT(UCSRC_REG, USBS_BIT);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgStopBits == STOP_BITS_2){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgStopBits == STOP_BITS_2){
 		SET_BIT(UCSRC_REG, USBS_BIT);
 	}
 	else { /* Do Nothing */ }
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgUartInterrupt == UART_INTERRUPT_DISABLED){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgUartInterrupt == UART_INTERRUPT_DISABLED){
 		CLR_BIT(UCSRB_REG, RXCIE_BIT);
 		CLR_BIT(UCSRB_REG, UDRIE_BIT);
 		CLR_BIT(UCSRB_REG, TXCIE_BIT);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgUartInterrupt == UART_INTERRUPT_ENABLED){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgUartInterrupt == UART_INTERRUPT_ENABLED){
 		SET_BIT(UCSRB_REG, RXCIE_BIT);
 		SET_BIT(UCSRB_REG, UDRIE_BIT);
 		SET_BIT(UCSRB_REG, TXCIE_BIT);
 	}
 	else { /* Do Nothing */ }
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgUartClkMode == UART_ASYNCHRONOUS){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgUartClkMode == UART_ASYNCHRONOUS){
 		CLR_BIT(UCSRC_REG, UMSEL_BIT);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgUartClkMode == UART_SYNCHRONOUS){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgUartClkMode == UART_SYNCHRONOUS){
 		SET_BIT(UCSRC_REG, UMSEL_BIT);
 	}
 	else { /* Do Nothing */ }
 
-	if(LOCAL_tcfgUART->GLOBAL_tcfgUartCommMode == UART_2X_SPEED){
+	if(UART_arr[deviceNumber].GLOBAL_tcfgUartCommMode == UART_2X_SPEED){
 		SET_BIT(UCSRA_REG, U2X_BIT);
 		UBRRL_REG = LOCAL_tcfgUART->GLOBAL_tcfgUartBaudRate2X;
 		UBRRH_REG = ((LOCAL_tcfgUART->GLOBAL_tcfgUartBaudRate2X)>>8);
 	}
-	else if(LOCAL_tcfgUART->GLOBAL_tcfgUartCommMode == UART_1X_SPEED){
+	else if(UART_arr[deviceNumber].GLOBAL_tcfgUartCommMode == UART_1X_SPEED){
 		CLR_BIT(UCSRA_REG, U2X_BIT);
 		UBRRL_REG = LOCAL_tcfgUART->GLOBAL_tcfgUartBaudRate1X;
 		UBRRH_REG = ((LOCAL_tcfgUART->GLOBAL_tcfgUartBaudRate1X)>>8);
@@ -89,12 +92,12 @@ void UART_vInit(const ST_UART_tcfgInitialize *LOCAL_tcfgUART){
 	else { /* Do Nothing */ }
 }
 
-void UART_vEnable(const ST_UART_tcfgInitialize *LOCAL_tcfgUART){
+void UART_vEnable(){
 	SET_BIT(UCSRB_REG, RXEN_BIT);
 	SET_BIT(UCSRB_REG, TXEN_BIT);
 }
 
-void UART_vDisable(const ST_UART_tcfgInitialize *LOCAL_tcfgUART){
+void UART_vDisable(){
 	CLR_BIT(UCSRB_REG, RXEN_BIT);
 	CLR_BIT(UCSRB_REG, TXEN_BIT);
 }

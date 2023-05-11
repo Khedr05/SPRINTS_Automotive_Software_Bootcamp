@@ -1,0 +1,77 @@
+
+
+void LCD_vInit(void)
+{
+	step 1 	: check global variable named initFlag
+	step 2 	: if it equal 0
+	step 3 	: then set data & control pins as output
+	step 4 	: increment initFlag
+	step 5 	: else if it less than or equal 4
+	step 6 	: call lcd_sendCmd function  & pass to it TWO_LINE_EIGHT_BIT command as parameter 
+	step 7 	: increment initFlag
+	step 8 	: else if it less than or equal 8
+	step 9 	: call lcd_sendCmd function & pass to it CURSOR_ON command as parameter 
+	step 10 : increment initFlag
+	step 11 : else if it less than or equal 12
+	step 12 : call lcd_sendCmd function & pass to it CLEAR_CMD command as parameter 
+	step 13 : set initFlag to be equal 0
+
+}
+
+void LCD_vSendCmd(Uchar8_t Command)
+{
+	step 1  : check global variable named cmdFlag
+	step 2  : if it equal 0
+	step 3  : set rs & rw pins value to low
+	step 4  : increment  cmdFlag
+	step 5  : else if equal 1
+	step 6  : set en pin value to high
+	step 7  : increment cmdFlag
+	step 8  : else if equal 2
+	step 9  : send the command on data pins
+	step 10 : increment cmdFlag
+	step 11 : else if equal 3
+	step 12 : set en pin value to low
+	step 13 : set cmdFlag to be equal 0
+
+}
+
+void LCD_vDisplayChar(Uchar8_t char)
+{
+	step 1  : check global variable named charFlag
+	step 2  : if it equal 0
+	step 3  : set rw pins value to low
+	step 4  : set rs pins value to high
+	step 5  : increment  charFlag
+	step 6  : else if equal 1
+	step 7  : set en pin value to high
+	step 8  : increment charFlag
+	step 9  : else if less than or equal 5
+	step 10 : send the command on data pins
+	step 11 : increment charFlag
+	step 12 : else if equal 6
+	step 13 : set en pin value to low
+	step 14 : set charFlag to be equal 0
+}
+
+void LCD_vMainFlow(void)
+{
+	step 1 	: initialize timerFlag = 0
+	step 2 	: initialize initFlag = 0
+	step 3 	: initialize cmdFlag = 0
+	step 4 	: initialize charFlag = 0
+	step 5 	: if timerFlag less than or equal 13
+	step 6 	: stop timer 
+	step 7 	: call LCD_vInit() to initialize the lcd
+	step 8 	: start timer with the suitable delay
+	step 9 	: else if timerFlag less than or equal 19
+	step 10 : stop timer
+	step 11 : call LCD_vDisplayChar() and pass the char to it as parameter to display it on the lcd
+	step 12 : start timer with the suitable delay 
+}
+
+TIMER_ISR()
+{
+	step 1 : increment timerFlag
+	step 2 : call LCD_MAIN_FLOW_FUNCTION()
+}

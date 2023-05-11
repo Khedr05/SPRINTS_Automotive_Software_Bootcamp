@@ -1,0 +1,82 @@
+
+void KEYPAD_init(ST_KEYPAD_cfg_t *_keypad)
+{
+	step 1 : if _keypad equal NULL then return error state
+	step 2 : else 
+	{
+		step 3 : intilize number of rows in keypad 
+		step 4 : intilize number of columns in keypad 
+		step 5 : intilize number of i = 0 as a counter 
+		step 6 : intilize number of j = 0 as a counter 
+		step 6 : loop while i less than the number of rows
+		{
+		  step 7 : call GPIO_pin_intialize(&(_keypad->KEYPAD_arrRow[i]))
+		  step 8 : increment i
+		}
+		step 9 : loop Until j less than number of columns
+		{
+			step 10 : GPIO_pin_intialize(&(_keypad->KEYPAD_arrCol[j]))
+			step 11 : increment j
+		} 
+	}	
+
+}
+
+ void KEYPAD_scaningPressedBtn(ST_KEYPAD_cfg_t
+*_keypad , Uchar8_t *pressedBtnVal)
+{
+
+	step 1 : if pointers equal NULL return Error State
+	step 2 : else 
+	{
+		step 3 	: intialize 2D array its size is keypad row * keypad col and assign keypad buttons value in it sequantial
+		step 4 	: intilize number of rows in keypad 
+		step 5 	: intilize number of columns in keypad 
+		step 6 	: intilize number of row = 0 as a counter 
+		step 7 	: intilize number of col = 0 as a counter 
+		step 8 	: intilize btnVal Variable 
+		step 9 	: intilize i = 0 as counter
+		step 10 : loop while i less than number of rows
+		{
+			step 11 : loop until row less than number of rows
+			step 12 : call GPIO_pin_write_logic(&(_keypad->KEYPAD_arrRow[row],GPIO_LOGIC_LOW))
+			step 13 : increment row
+		}
+		step 14 : call GPIO_pin_write_logic(&(_keypad->KEYPAD_arrRow[row],GPIO_LOGIC_HIGH))
+		step 15 : loop until col less than number of columns
+		{
+			step 16 :call GPIO_pin_read_logic(&(_keypad->KEYPAD_arrCol[col],&btnVal))
+			step 17 : check if btnVal equal to GPIO_LOGIC_HIGH
+			{
+				step 18 : *pressedBtnVal = KEYPAD_arrBtnVal[i][col]
+			}
+		}
+		step 19 : increment i
+	} 
+}
+
+void KEYPAD_MainFlow(void)
+{
+	step 1 : intialize global variable named flag and equal 0
+	step 2 : check if flag equal 1 
+	{
+		step 3 : call KEYPAD_init() and pass to it the keypad object
+		step 4 : increment the flag 
+	} 
+	step 5 : else if the flag equal 2
+	{
+		step 5 : call KEYPAD_ScaningPressedBtn() and pass to it the keypad object
+		step 6 : stop timer
+		step 8 : start timer with suitable delay for this operation
+	}
+	step 9 : else if the flag equal 3
+	{
+		step 10 : call KEYPAD_ScaningPressedBtn() and pass to it the keypad object 
+	}
+}
+
+TIMER_ISR()
+{
+	step 1 : assign flag to be equal 3
+	step 2 : call KEYPAD_MAIN_FLOW() function
+}

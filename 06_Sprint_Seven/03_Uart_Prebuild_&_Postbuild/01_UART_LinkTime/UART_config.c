@@ -16,7 +16,7 @@ typedef struct{
 const ST_UART_tcfgInitialize UART_arr[MAX_UART_SIZE];
 
 
-UART_arr[0]
+UART_arr[0] =
 {
 	.GLOBAL_tcfgCharSize  = CHAR_8_BITS,
 	.GLOBAL_tcfgParityState = PARITY_DISABLED,

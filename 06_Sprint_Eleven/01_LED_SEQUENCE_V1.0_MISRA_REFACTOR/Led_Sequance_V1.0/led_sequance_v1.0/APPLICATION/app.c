@@ -12,29 +12,29 @@
 
 ST_led_t led0 =
 {
-		.port_name = GPIO_PORTC_INDEX,
-		.pin = GPIO_PIN0,
+		.port_name = GPIO_PORTB_INDEX,
+		.pin = GPIO_PIN4,
 		.led_status = LED_STATUS_OFF
 };
 
 ST_led_t led1 =
 {
-		.port_name = GPIO_PORTC_INDEX,
-		.pin = GPIO_PIN1,
+		.port_name = GPIO_PORTB_INDEX,
+		.pin = GPIO_PIN5,
 		.led_status = LED_STATUS_OFF
 };
 
 ST_led_t led2 =
 {
-		.port_name = GPIO_PORTC_INDEX,
-		.pin = GPIO_PIN2,
+		.port_name = GPIO_PORTB_INDEX,
+		.pin = GPIO_PIN6,
 		.led_status = LED_STATUS_OFF
 };
 
 ST_led_t led3 =
 {
-		.port_name = GPIO_PORTC_INDEX,
-		.pin = GPIO_PIN3,
+		.port_name = GPIO_PORTB_INDEX,
+		.pin = GPIO_PIN7,
 		.led_status = LED_STATUS_OFF
 };
 
@@ -43,8 +43,8 @@ ST_PUSH_BTN_t btn0 =
 {
 		.PUSH_BTN_pin =
 		{
-				.port = GPIO_PORTA_INDEX,
-				.pin = GPIO_PIN0,
+				.port = GPIO_PORTB_INDEX,
+				.pin = GPIO_PIN2,
 				.direction = GPIO_DIRECTION_INPUT,
 				.logic = GPIO_LOGIC_HIGH
 		},

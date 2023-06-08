@@ -11,8 +11,6 @@ main.d main.o: .././main.c .././APPLICATION/app.h \
  .././APPLICATION/../ECUAL/led/../../COMMON/bit_math.h \
  .././APPLICATION/../ECUAL/push_button/pb_interface.h \
  .././APPLICATION/../ECUAL/push_button/pb_config.h \
- .././APPLICATION/../ECUAL/push_button/../../MCAL/DIO/DIO_interface.h \
- .././APPLICATION/../ECUAL/push_button/../../MCAL/DIO/dio_interface.h \
  .././APPLICATION/../ECUAL/push_button/../../COMMON/bit_math.h \
  .././APPLICATION/../COMMON/std_types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
@@ -47,10 +45,6 @@ main.d main.o: .././main.c .././APPLICATION/app.h \
 .././APPLICATION/../ECUAL/push_button/pb_interface.h:
 
 .././APPLICATION/../ECUAL/push_button/pb_config.h:
-
-.././APPLICATION/../ECUAL/push_button/../../MCAL/DIO/DIO_interface.h:
-
-.././APPLICATION/../ECUAL/push_button/../../MCAL/DIO/dio_interface.h:
 
 .././APPLICATION/../ECUAL/push_button/../../COMMON/bit_math.h:
 

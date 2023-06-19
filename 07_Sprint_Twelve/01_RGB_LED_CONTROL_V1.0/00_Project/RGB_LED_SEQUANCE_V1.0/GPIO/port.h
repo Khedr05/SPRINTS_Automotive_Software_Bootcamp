@@ -18,9 +18,9 @@ extern InterruptHandler interruptHandlers[6][8];
 
 
 
-void Port_Init( Port_ConfigType* ConfigPtr);
-void GPIO_Write(Port_Num port_num, Port_PinNum pin_num, uint8_t value);
-void GPIO_Read(Port_Num port_num, Port_PinNum pin_num,Port_PinLevel* value);
-void GPIO_Toggle(Port_Num port_num, Port_PinNum pin_num);
-void GPIO_Enable_Interrupt(Port_Num port_num,Port_PinNum port_pinnum);
-void GPIO_Disable_Interrupt(Port_Num,Port_PinNum);
+Port_ErrorCode Port_Init( Port_ConfigType* ConfigPtr);
+Port_ErrorCode GPIO_Write(Port_Num port_num, Port_PinNum pin_num, uint8_t value);
+Port_ErrorCode GPIO_Read(Port_Num port_num, Port_PinNum pin_num,Port_PinLevel* value);
+Port_ErrorCode GPIO_Toggle(Port_Num port_num, Port_PinNum pin_num);
+Port_ErrorCode GPIO_Enable_Interrupt(Port_Num port_num,Port_PinNum port_pinnum);
+Port_ErrorCode GPIO_Disable_Interrupt(Port_Num,Port_PinNum);

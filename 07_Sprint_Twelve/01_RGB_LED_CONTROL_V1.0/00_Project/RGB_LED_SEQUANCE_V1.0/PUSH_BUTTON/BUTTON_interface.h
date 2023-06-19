@@ -8,8 +8,8 @@
 #include "port.h"
 #include "BUTTON_config.h"
 
-void PUSH_BTN_intialize(const ST_PUSH_BTN_pinCfg_t *btn);
-void PUSH_BTN_read_state(const ST_PUSH_BTN_pinCfg_t *btn , ENU_PUSH_BTN_state_t *btn_state);
+ENU_PUSH_BTN_systemState_t PUSH_BTN_intialize(const ST_PUSH_BTN_pinCfg_t *btn);
+ENU_PUSH_BTN_systemState_t PUSH_BTN_read_state(const ST_PUSH_BTN_pinCfg_t *btn , ENU_PUSH_BTN_state_t *btn_state);
 
 
 

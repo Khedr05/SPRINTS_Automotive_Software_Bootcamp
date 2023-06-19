@@ -70,6 +70,11 @@ typedef enum {
     IntEvent_Masked,
 	  IntEvent_UnMaske	
 } Port_IntMask;
+typedef enum {
+    PORT_OK,
+    PORT_INVALID_PARAM,
+    PORT_ERROR
+} Port_ErrorCode;
 
 typedef struct {
     Port_PinModeType PortPinMode;

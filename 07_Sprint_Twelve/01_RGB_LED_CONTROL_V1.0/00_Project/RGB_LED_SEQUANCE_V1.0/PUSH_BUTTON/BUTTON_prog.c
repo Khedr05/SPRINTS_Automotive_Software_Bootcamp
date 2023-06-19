@@ -1,59 +1,81 @@
 
 #include "BUTTON_interface.h"
 
-
-void PUSH_BTN_intialize(const ST_PUSH_BTN_pinCfg_t *btn)
+ENU_PUSH_BTN_systemState_t PUSH_BTN_intialize(const ST_PUSH_BTN_pinCfg_t *btn)
 {
-  Port_ConfigType  STR_PortsConfig =
-           {PORT_MODE_DIGITAL , PORT_PIN_LEVEL_LOW , PORT_PIN_DIRECTION_IN , btn->pushBtnConnection,
-             PORT_PIN_OUTPUT_CURRENT_4MA ,btn->portNumber, btn->pinNumber,
-            Port_pin };
+	ENU_PUSH_BTN_systemState_t error;
+    Port_ConfigType STR_PortsConfig = {
+        .PortPinMode = PORT_MODE_DIGITAL,
+        .PortPinLevelValue = PORT_PIN_LEVEL_LOW,
+        .PortPinDirection = PORT_PIN_DIRECTION_IN,
+        .PortPinInternalAttach = btn->pushBtnConnection,
+        .PortPinOutputCurrent = PORT_PIN_OUTPUT_CURRENT_4MA,
+        .PortNum = btn->portNumber,
+        .PortPinNum = btn->pinNumber,
+        .PortIntPin = Port_pin
+    };
 
-           Port_Init(&STR_PortsConfig);
-
-         
+    if (Port_Init(&STR_PortsConfig) == PORT_OK)
+    {
+        error= PUSH_BTN_INIT_OK;
+    }
+    else
+    {
+        error= PUSH_BTN_INIT_NOK;
+    }
+		return error;
 }
-
-
-void	PUSH_BTN_read_state(const ST_PUSH_BTN_pinCfg_t *btn , ENU_PUSH_BTN_state_t *btn_state)
+ENU_PUSH_BTN_systemState_t PUSH_BTN_read_state(const ST_PUSH_BTN_pinCfg_t *btn, ENU_PUSH_BTN_state_t *btn_state)
 {
-   
+	ENU_PUSH_BTN_systemState_t error;
+    Port_PinLevel btnLogic;
 
+    Port_ConfigType dio_pinCfg = {
+        .PortPinMode = PORT_MODE_DIGITAL,
+        .PortPinLevelValue = PORT_PIN_LEVEL_LOW,
+        .PortPinDirection = PORT_PIN_DIRECTION_IN,
+        .PortPinInternalAttach = btn->pushBtnConnection,
+        .PortPinOutputCurrent = PORT_PIN_OUTPUT_CURRENT_4MA,
+        .PortNum = btn->portNumber,
+        .PortPinNum = btn->pinNumber,
+        .PortIntPin = Port_pin
+    };
 
-        Port_PinLevel btnLogic;
-
-        Port_ConfigType  dio_pinCfg =
-         {PORT_MODE_DIGITAL , PORT_PIN_LEVEL_LOW , PORT_PIN_DIRECTION_IN , btn->pushBtnConnection,
-             PORT_PIN_OUTPUT_CURRENT_4MA ,btn->portNumber, btn->pinNumber,
-            Port_pin };
-
-         GPIO_Read(btn->portNumber, btn->pinNumber,&btnLogic);
-
-        if(PORT_PIN_PUR == btn->pushBtnConnection)
-        {
-            if(PORT_PIN_LEVEL_HIGH == btnLogic)
-            {
-                *btn_state = PUSH_BTN_STATE_RELEASED;
-            }
-            else
-            {
-                *btn_state = PUSH_BTN_STATE_PRESSED;
-            }
-
-        }
-        else if(PORT_PIN_PDR == btn->pushBtnConnection)
-        {
-            if(PORT_PIN_LEVEL_HIGH == btnLogic)
-            {
-                *btn_state = PUSH_BTN_STATE_PRESSED;
-            }
-            else
-            {
-                *btn_state = PUSH_BTN_STATE_RELEASED;
-            }
-        }
-      
+    if (Port_Init(&dio_pinCfg) != PORT_OK)
+    {
+        error= PUSH_BTN_INIT_NOK;  // Return initialization error
     }
 
+    GPIO_Read(btn->portNumber, btn->pinNumber, &btnLogic);
 
+    if (btn->pushBtnConnection == PORT_PIN_PUR)
+    {
+        if (btnLogic == PORT_PIN_LEVEL_HIGH)
+        {
+            *btn_state = PUSH_BTN_STATE_RELEASED;
+        }
+        else
+        {
+            *btn_state = PUSH_BTN_STATE_PRESSED;
+        }
+    }
+    else if (btn->pushBtnConnection == PORT_PIN_PDR)
+    {
+        if (btnLogic == PORT_PIN_LEVEL_HIGH)
+        {
+            *btn_state = PUSH_BTN_STATE_PRESSED;
+        }
+        else
+        {
+            *btn_state = PUSH_BTN_STATE_RELEASED;
+        }
+    }
+    else
+    {
+        error= PUSH_BTN_NULL_PTR;  // Return error for invalid connection type
+    }
+
+    error= PUSH_BTN_READ_OK;  // Return success
+		return error;
+}
 

@@ -36,7 +36,7 @@ ENU_SYSTICK_systemState_t SYSTICK_init(STR_SYSTICK_cfg_t *systickCfg)
 				   ptrFucnSystickTrigger = systickCfg->ptrFucnSystickcallback;
 				   ret = SYSTICK_INTERRUPT_OK;
 			 }
-			 else if(SYSTICK_INTERRUPT_ENABLED == systickCfg->interruptStatus)
+			 else if(SYSTICK_INTERRUPT_DISABLED == systickCfg->interruptStatus)
 			 {
 				   CLEAR_BIT(STCTRL_REG , 1);
 				   ret = SYSTICK_INTERRUPT_OK;

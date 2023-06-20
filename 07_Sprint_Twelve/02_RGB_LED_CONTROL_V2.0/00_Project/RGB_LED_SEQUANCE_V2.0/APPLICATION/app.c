@@ -41,7 +41,7 @@ void app_superloop(void)
 			 pressCounter++;
 		}
 		
-		if(pressCounter == 1)
+		if(pressCounter == PRESS_ONE)
 		{
 			if(redStatusFlag == 0)
 			{
@@ -55,7 +55,7 @@ void app_superloop(void)
 			{
 				/* Do Nothing */
 			}
-		   if(systickFlag == 1)
+		   if(systickFlag == SYSTICK_FLAG_FIRED)
 			 {
 				 	systickFlag = 0;
 					LED_turnOff(&a_ledCfgPins[0]);
@@ -67,7 +67,7 @@ void app_superloop(void)
 				 /* Do Nothing */
 			 }
 		}
-		else if(pressCounter == 2)
+		else if(pressCounter == PRESS_TWO)
 		{
 			if(blueStatusFlag == 0)
 			{
@@ -81,7 +81,7 @@ void app_superloop(void)
 			{
 				 /* Do Nothing */
 			}
-			if(systickFlag == 1)
+			if(systickFlag == SYSTICK_FLAG_FIRED)
 			{
 				 systickFlag = 0;
 				LED_turnOff(&a_ledCfgPins[0]);
@@ -93,7 +93,7 @@ void app_superloop(void)
 				 /* Do Nothing */
 			}
 		}
-		else if(pressCounter == 3)
+		else if(pressCounter == PRESS_THREE)
 		{
 			if(greenStatusFlag == 0)
 			{
@@ -107,7 +107,7 @@ void app_superloop(void)
 			{
 				/* Do Nothing */
 			}
-			if(systickFlag == 1)
+			if(systickFlag == SYSTICK_FLAG_FIRED)
 			{
 				 systickFlag = 0;
 				 LED_turnOff(&a_ledCfgPins[0]);
@@ -119,7 +119,7 @@ void app_superloop(void)
 				 /* Do Nothing */
 			}	
 		}
-		else if(pressCounter == 4)
+		else if(pressCounter == PRESS_FOUR)
 		{
 			if(allOnStatusFlag == 0)
 			{
@@ -134,7 +134,7 @@ void app_superloop(void)
 				/* Do Nothing */
 			}
 			
-			if(systickFlag == 1)
+			if(systickFlag == SYSTICK_FLAG_FIRED)
 			{
 				systickFlag = 0;
 				LED_turnOff(&a_ledCfgPins[0]);
@@ -146,7 +146,7 @@ void app_superloop(void)
 				 /* Do Nothing */
 			}
 		}
-		else if(pressCounter == 5)
+		else if(pressCounter == PRESS_FIVE)
 		{  
 			 redStatusFlag = 0;
 			 greenStatusFlag = 0;
@@ -167,5 +167,5 @@ void app_superloop(void)
 
 void systickCallback(void)
 {
-	 systickFlag = 1;
+	 systickFlag = SYSTICK_FLAG_FIRED;
 }

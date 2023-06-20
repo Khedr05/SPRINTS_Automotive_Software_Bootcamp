@@ -32,9 +32,9 @@ void app_superloop(void)
 			{
 				 PUSH_BTN_read_state(&a_pushBtnCfgPins[0] , &btn);
 				 
-				for(VUint8_t i=0;i<200;i++)
+				for(VUint8_t i=0;i<DEBOUNCING_ERROR_DETECT_1;i++)
 				{
-					for(VUint8_t j =0 ; j<100;j++);
+					for(VUint8_t j =0 ; j<DEBOUNCING_ERROR_DETECT_2;j++);
 				}
 			}
 		

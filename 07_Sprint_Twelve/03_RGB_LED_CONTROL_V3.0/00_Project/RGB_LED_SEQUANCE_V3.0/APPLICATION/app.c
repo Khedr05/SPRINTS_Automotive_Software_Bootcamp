@@ -54,7 +54,7 @@ void app_superloop(void)
 	{
 	
 
-		if(flag2==0)
+		if(flag2==PRESS_ZERO)
 		{
 			flag2=1;
 			if(flag==0)
@@ -67,7 +67,7 @@ void app_superloop(void)
 
 
 			flag++;
-		}else if (flag==1)
+		}else if (flag==PRESS_ONE)
 		{
 			LED_turnOff(&a_ledCfgPins[LED_PIN]);
 						is_on=0;
@@ -77,7 +77,7 @@ void app_superloop(void)
 
 			flag++;
 
-		}else if (flag==2)
+		}else if (flag==PRESS_TWO)
 		{
 			LED_turnOff(&a_ledCfgPins[LED_PIN]);
 			is_on=0;
@@ -86,7 +86,7 @@ void app_superloop(void)
 
 			flag++;
 
-		}else if (flag==3)
+		}else if (flag==PRESS_THREE)
 		{
 						LED_turnOff(&a_ledCfgPins[LED_PIN]);
 
@@ -101,9 +101,9 @@ void app_superloop(void)
 	}
 	/*this loop to detection the debouncing*/
 
-	for(volatile uint16_t i=0;i<1000;i++)
+	for(volatile uint16_t i=0;i<DEBOUNCING_ERROR_DETECT_1;i++)
 		{
-		for(volatile uint16_t j=0;j<100;j++)
+		for(volatile uint16_t j=0;j<DEBOUNCING_ERROR_DETECT_2;j++)
 {
 }
 		}

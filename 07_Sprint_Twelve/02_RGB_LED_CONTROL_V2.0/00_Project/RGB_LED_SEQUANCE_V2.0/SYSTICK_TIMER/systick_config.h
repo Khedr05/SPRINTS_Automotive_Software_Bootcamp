@@ -1,0 +1,56 @@
+
+
+#ifndef STSTICK_CONFIG_H_
+#define STSTICK_CONFIG_H_
+
+#define			SYSTICK_CFG_ARRAY_SIZE   1
+
+typedef enum
+{
+	SYSTICK_INIT_OK = 0,
+	SYSTICK_INIT_NOK,
+	SYSTICK_PTR_NULL,
+	SYSTICK_CLOCK_OK,
+	SYSTICK_CLOCK_NOK,
+	SYSTICK_INTERRUPT_OK,
+	SYSTICK_INTERRUPT_NOK,
+	SYSTICK_ENABLE_OK,
+	SYSTICK_DISABLE_OK,
+	SYSTICK_ENABLE_NOK,
+	SYSTICK_RESTART_OK,
+	SYSTICK_RESTART_NOK,
+	SYSTICK_DELAY_START_OK
+}ENU_SYSTICK_systemState_t;
+
+
+
+typedef enum
+{
+	SYSTICK_SYSTEM_CLOCK = 0,
+	SYSTICK_PIOSC_CLOCK
+}ENU_SYSTICK_clock_t;
+
+
+typedef enum 
+{
+		SYSTICK_INTERRUPT_ENABLED = 0,
+	  SYSTICK_INTERRUPT_DISABLED
+}ENU_SYSTICK_interruptStatus_t;
+
+
+typedef enum 
+{
+	 SYSTICK_ENABLED = 0,
+	 SYSTICK_DISABLED
+}ENU_SYSTICK_status_t;
+	
+
+typedef struct 
+{
+	ENU_SYSTICK_clock_t									systickClock;
+	ENU_SYSTICK_interruptStatus_t				interruptStatus;
+	ENU_SYSTICK_status_t								status;
+	void(*ptrFucnSystickcallback)(void);
+}STR_SYSTICK_cfg_t;
+
+#endif /* STSTICK_CONFIG_H_  */

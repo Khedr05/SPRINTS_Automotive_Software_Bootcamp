@@ -84,6 +84,11 @@
 static void prvSetupHardware( void );
 /*-----------------------------------------------------------*/
 
+#define STR_MAX_SIZE     16
+#define STR_MAX_COUNT    10 
+#define WAITING_TICKS    100
+#define HAVEY_LOAD			 100000
+#define START_COUNT       0
 
 SemaphoreHandle_t uartSemaphore = NULL;
 
@@ -91,11 +96,11 @@ TaskHandle_t sendString100msTask_Handler = NULL;
 TaskHandle_t sendString500msTask_Handler = NULL;
 TaskHandle_t createSemaphoreMutexTask_Handler = NULL;
 
-const signed char ptrSendString100ms[16] = "sherifTask100ms";
-char task100MsCounter = 0;
+const signed char ptrSendString100ms[STR_MAX_SIZE] = "sherifTask100ms";
+char task100MsCounter = START_COUNT;
 
-const signed char ptrSendString500ms[16] = "sherifTask500ms";
-char task500MsCounter = 0;
+const signed char ptrSendString500ms[STR_MAX_SIZE] = "sherifTask500ms";
+char task500MsCounter = START_COUNT;
 
 signed char newLine = '\n';
 
@@ -116,12 +121,12 @@ void sendString100msTask(void * pvParameters)
 		 if( uartSemaphore != NULL )
       {
        
-        if( xSemaphoreTake( uartSemaphore, ( TickType_t ) 100 ) == pdTRUE )
+        if( xSemaphoreTake( uartSemaphore, ( TickType_t ) WAITING_TICKS ) == pdTRUE )
         {
             
-				  for(task100MsCounter = 0; task100MsCounter < 10 ; task100MsCounter++)
+				  for(task100MsCounter = START_COUNT; task100MsCounter < STR_MAX_COUNT ; task100MsCounter++)
 					{
-						while(vSerialPutString(ptrSendString100ms , 16) == pdFALSE);
+						while(vSerialPutString(ptrSendString100ms , STR_MAX_SIZE) == pdFALSE);
 					}
 					  xSerialPutChar(newLine);
             xSemaphoreGive( uartSemaphore );
@@ -144,15 +149,15 @@ void sendString500msTask(void * pvParameters)
 			if( uartSemaphore != NULL )
       {
        
-        if( xSemaphoreTake( uartSemaphore, ( TickType_t ) 100 ) == pdTRUE )
+        if( xSemaphoreTake( uartSemaphore, ( TickType_t ) WAITING_TICKS ) == pdTRUE )
         {
             
-				  for(task500MsCounter = 0; task500MsCounter < 10 ; task500MsCounter++)
+				  for(task500MsCounter = START_COUNT; task500MsCounter < STR_MAX_COUNT ; task500MsCounter++)
 					{
-						 while(vSerialPutString(ptrSendString500ms , 16) == pdFALSE);
+						 while(vSerialPutString(ptrSendString500ms , STR_MAX_SIZE) == pdFALSE);
 					}
 					  xSerialPutChar(newLine);
-					for(i = 0 ; i < 100000 ; i++);
+					for(i = START_COUNT ; i < HAVEY_LOAD ; i++);
             xSemaphoreGive( uartSemaphore );
         }
         else

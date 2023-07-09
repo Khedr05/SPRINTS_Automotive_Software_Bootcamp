@@ -84,6 +84,11 @@
  */
 static void prvSetupHardware( void );
 
+#define FLAG_FIRED     1
+#define FLAG_RESTORE   0 
+#define WAITING_TICKS  100
+
+
 SemaphoreHandle_t btnStateSemaphore = NULL;
 
 TaskHandle_t ledControlTask_Handler = NULL;
@@ -113,21 +118,21 @@ void ledControlTask(void * pvParameters)
 			if( btnStateSemaphore != NULL )
       {
        
-        if( xSemaphoreTake( btnStateSemaphore, ( TickType_t ) 100 ) == pdTRUE )
+        if( xSemaphoreTake( btnStateSemaphore, ( TickType_t ) WAITING_TICKS ) == pdTRUE )
         {
-            if(btnIsPressed == 1)
+            if(btnIsPressed == FLAG_FIRED)
 						{
-							if(toggleFlag == 0)
+							if(toggleFlag == FLAG_RESTORE)
 							{
 								 GPIO_write(PORT_0 , PIN1 , PIN_IS_HIGH);
-							   btnIsPressed = 0;
-								 toggleFlag = 1;
+							   btnIsPressed = FLAG_RESTORE;
+								 toggleFlag = FLAG_FIRED;
 							}
-							else if(toggleFlag == 1)
+							else if(toggleFlag == FLAG_FIRED)
 							{
 									GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
-							    btnIsPressed = 0;
-								  toggleFlag = 0;
+							    btnIsPressed = FLAG_RESTORE;
+								  toggleFlag = FLAG_RESTORE;
 							}
 							else
 							{
@@ -157,7 +162,7 @@ void btnScanningTask(void * pvParameters)
 			if( btnStateSemaphore != NULL )
       {
        
-        if( xSemaphoreTake( btnStateSemaphore, ( TickType_t ) 100 ) == pdTRUE )
+        if( xSemaphoreTake( btnStateSemaphore, ( TickType_t ) WAITING_TICKS ) == pdTRUE )
         {		
 						btnState = GPIO_read(PORT_0 , PIN0);
 						if(btnState == PIN_IS_LOW)
@@ -166,7 +171,7 @@ void btnScanningTask(void * pvParameters)
 							{
 								 vTaskDelay(50);
 							}
-							 btnIsPressed = 1;
+							 btnIsPressed = FLAG_FIRED;
 						}
 						else
 						{

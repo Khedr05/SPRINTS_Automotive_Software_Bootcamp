@@ -88,6 +88,7 @@ static void prvSetupHardware( void );
 #define FLAG_RESTORE   0 
 #define WAITING_TICKS  100
 
+#define DELAY_50_MS   50
 
 SemaphoreHandle_t btnStateSemaphore = NULL;
 
@@ -169,7 +170,7 @@ void btnScanningTask(void * pvParameters)
 						{
 							while(btnState == GPIO_read(PORT_0 , PIN0))
 							{
-								 vTaskDelay(50);
+								 vTaskDelay(DELAY_50_MS);
 							}
 							 btnIsPressed = FLAG_FIRED;
 						}

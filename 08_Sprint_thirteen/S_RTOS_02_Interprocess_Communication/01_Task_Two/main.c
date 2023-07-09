@@ -90,6 +90,9 @@ static void prvSetupHardware( void );
 #define HAVEY_LOAD			 100000
 #define START_COUNT       0
 
+#define DELAY_100_MS  100
+#define DELAY_500_MS  500
+
 SemaphoreHandle_t uartSemaphore = NULL;
 
 TaskHandle_t sendString100msTask_Handler = NULL;
@@ -136,7 +139,7 @@ void sendString100msTask(void * pvParameters)
            /* Do Nothing */
         }
 		}
-			vTaskDelay(100);
+			vTaskDelay(DELAY_100_MS);
 	}
 }
 
@@ -165,7 +168,7 @@ void sendString500msTask(void * pvParameters)
            /* Do Nothing */
         }
 		}
-		vTaskDelay(500);
+		vTaskDelay(DELAY_500_MS);
 	}
 }
 

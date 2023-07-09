@@ -82,6 +82,7 @@
  */
 static void prvSetupHardware( void );
 
+#define DELAY_ONE_SEC   1000
 TaskHandle_t LedTask_Handler = NULL;
 /*-----------------------------------------------------------*/
 
@@ -91,11 +92,11 @@ void ledTask(void * pvParameters)
 	{
 		GPIO_write(PORT_0 , PIN1 , PIN_IS_HIGH);
 		
-		vTaskDelay(1000);
+		vTaskDelay(DELAY_ONE_SEC);
 		
 		GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
 		
-		vTaskDelay(1000);
+		vTaskDelay(DELAY_ONE_SEC);
 	}
 }
 

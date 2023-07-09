@@ -82,6 +82,10 @@
  */
 static void prvSetupHardware( void );
 
+#define DELAY_100_MS    100
+#define DELAY_500_MS    500
+#define DELAY_1000_MS   1000
+
 TaskHandle_t pinOneLedTask_Handler = NULL;
 TaskHandle_t pinTwoLedTask_Handler = NULL;
 TaskHandle_t pinThreeLedTask_Handler = NULL;
@@ -94,11 +98,11 @@ void pinOneLedTask(void * pvParameters)
 	{
 		GPIO_write(PORT_0 , PIN1 , PIN_IS_HIGH);
 		
-		vTaskDelay(100);
+		vTaskDelay(DELAY_100_MS);
 		
 		GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
 		
-		vTaskDelay(100);
+		vTaskDelay(DELAY_100_MS);
 	}
 }
 
@@ -108,11 +112,11 @@ void pinTwoLedTask(void * pvParameters)
 	{
 		GPIO_write(PORT_0 , PIN2 , PIN_IS_HIGH);
 		
-		vTaskDelay(500);
+		vTaskDelay(DELAY_500_MS);
 		
 		GPIO_write(PORT_0 , PIN2 , PIN_IS_LOW);
 		
-		vTaskDelay(500);
+		vTaskDelay(DELAY_500_MS);
 	}
 }
 
@@ -123,11 +127,11 @@ void pinThreeLedTask(void * pvParameters)
 	{
 		GPIO_write(PORT_0 , PIN3 , PIN_IS_HIGH);
 		
-		vTaskDelay(1000);
+		vTaskDelay(DELAY_1000_MS);
 		
 		GPIO_write(PORT_0 , PIN3 , PIN_IS_LOW);
 		
-		vTaskDelay(1000);
+		vTaskDelay(DELAY_1000_MS);
 	}
 }
 

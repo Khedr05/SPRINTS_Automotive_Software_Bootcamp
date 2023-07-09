@@ -82,16 +82,26 @@
  */
 static void prvSetupHardware( void );
 
+#define DELAY_100_MS    100
+#define DELAY_400_MS    400
+
+#define TIME_COUNT_20_TICK   20
+#define TIME_COUNT_40_TICK   40
+
+#define FLAG_FIRED     1
+#define FLAG_RESTORE   0 
+#define WAITING_TICKS  100
+
 TaskHandle_t ledSequanceOneTask_Handler = NULL;
 TaskHandle_t ledSequanceTwoTask_Handler = NULL;
 TaskHandle_t ledSequanceThreeTask_Handler = NULL;
 TaskHandle_t btnScanningTask_Handler = NULL;
 
-int8_t ledState = 0;
-int8_t timeCounter = 0;
-int8_t isSeqOff = 0;
-int8_t isSeq100 = 0;
-int8_t isSeq400 = 0;
+int8_t ledState = FLAG_RESTORE;
+int8_t timeCounter = FLAG_RESTORE;
+int8_t isSeqOff = FLAG_RESTORE;
+int8_t isSeq100 = FLAG_RESTORE;
+int8_t isSeq400 = FLAG_RESTORE;
 
 
 /*-----------------------------------------------------------*/
@@ -101,7 +111,7 @@ void ledSequanceOneTask(void * pvParameters)
 {
 	for(;;)
 	{
-		if(isSeqOff == 1)
+		if(isSeqOff == FLAG_FIRED)
 		{
 			GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
 		}
@@ -112,12 +122,12 @@ void ledSequanceTwoTask(void * pvParameters)
 {
 	for(;;)
 	{
-		if(isSeq400 == 1)
+		if(isSeq400 == FLAG_FIRED)
 		{
 			GPIO_write(PORT_0 , PIN1 , PIN_IS_HIGH);
-			vTaskDelay(400);
+			vTaskDelay(DELAY_400_MS);
 			GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
-			vTaskDelay(400);
+			vTaskDelay(DELAY_400_MS);
 		}
 	}
 }
@@ -126,12 +136,12 @@ void ledSequanceThreeTask(void * pvParameters)
 {
 	for(;;)
 	{
-		if(isSeq100 == 1)
+		if(isSeq100 == FLAG_FIRED)
 		{
 			GPIO_write(PORT_0 , PIN1 , PIN_IS_HIGH);
-			vTaskDelay(100);
+			vTaskDelay(DELAY_100_MS);
 			GPIO_write(PORT_0 , PIN1 , PIN_IS_LOW);
-			vTaskDelay(100);
+			vTaskDelay(DELAY_100_MS);
 		}
 	}
 }
@@ -147,28 +157,28 @@ void btnScanningTask(void * pvParameters)
 			 timeCounter++;
 			 /*btnIsPressed = 1;*/
 		}
-		else if(timeCounter != 0)
+		else if(timeCounter != FLAG_RESTORE)
 		{
 			/* btnIsPressed = 0;*/
 			ledState = timeCounter;
-			 timeCounter = 0;
-      	if(ledState < 20)
+			 timeCounter = FLAG_RESTORE;
+      	if(ledState < TIME_COUNT_20_TICK)
 				{ 
-					 isSeqOff = 1;
-					 isSeq100 = 0;
-					 isSeq400 = 0;
+					 isSeqOff = FLAG_FIRED;
+					 isSeq100 = FLAG_RESTORE;
+					 isSeq400 = FLAG_RESTORE;
 				}
-				else if((ledState > 20) && (ledState < 40) )
+				else if((ledState > TIME_COUNT_20_TICK) && (ledState < TIME_COUNT_40_TICK) )
 				{
-					isSeq400 = 1;
-					isSeq100 = 0;
-					isSeqOff = 0;
+					isSeq400 = FLAG_FIRED;
+					isSeq100 = FLAG_RESTORE;
+					isSeqOff = FLAG_RESTORE;
 				}
-				else if(ledState > 40)
+				else if(ledState > TIME_COUNT_40_TICK)
 				{
-					isSeq100 = 1;
-					isSeq400 = 0;
-					isSeqOff = 0;
+					isSeq100 = FLAG_FIRED;
+					isSeq400 = FLAG_RESTORE;
+					isSeqOff = FLAG_RESTORE;
 				}
 				else
 				{
@@ -179,7 +189,7 @@ void btnScanningTask(void * pvParameters)
 		{
 			/* Do Nothing */
 		}
-     vTaskDelay(100);
+     vTaskDelay(DELAY_100_MS);
 	}
 }
 

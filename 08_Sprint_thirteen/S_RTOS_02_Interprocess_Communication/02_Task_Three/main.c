@@ -91,6 +91,18 @@ static void prvSetupHardware( void );
 #define BIT_3	( 1 << 3 )
 #define BIT_4	( 1 << 4 )
 
+#define QUEUE_MAX_SIZE		20
+#define BUFFER_MAX_SIZE		27
+
+#define DELAY_50_MS			50
+#define DELAY_100_MS       100
+#define DELAY_40_MS 			40
+
+#define FLAG_FIRED     1
+#define FLAG_RESTORE   0 
+#define WAITING_TICKS  100
+
+#define START_COUNT  0
 
 EventGroupHandle_t edgeEventGroup = NULL;
 EventBits_t eventOfEdge;
@@ -108,7 +120,7 @@ TaskHandle_t uartSendTask_Handler = NULL;
 
 struct uartQueueMessage
 {
-    const signed char messageData[ 27 ];
+    const signed char messageData[ BUFFER_MAX_SIZE ];
 };
 
 struct uartQueueMessage btnOneRisingEdge = {"\nbtnOneRisingEdgeMassage"};
@@ -125,7 +137,7 @@ void createUartQueueTask(void * pvParameters)
 {
 	for(;;)
 	{
-		 uartQueue = xQueueCreate(20 , sizeof(struct uartQueueMessage ));
+		 uartQueue = xQueueCreate(QUEUE_MAX_SIZE , sizeof(struct uartQueueMessage ));
 		
 		if( uartQueue == NULL )
     {
@@ -160,7 +172,7 @@ void btnOneEdgeScanningTask(void * pvParameters)
 				 /* Do Nothing */
 			 }
 			preState = newState; 
-		 	vTaskDelay(50);
+		 	vTaskDelay(DELAY_50_MS);
 		 
 	}	
 }
@@ -185,7 +197,7 @@ void btnTwoEdgeScanningTask(void * pvParameters)
 				 /* Do Nothing */
 			 }
 			preState = newState; 
-		 	vTaskDelay(50);	 
+		 	vTaskDelay(DELAY_50_MS);	 
 	}	
 }
 
@@ -194,7 +206,7 @@ void uartSendString100msTask(void * pvParameters)
 	for(;;)
 	{
 		eventOfEdge = xEventGroupSetBits( edgeEventGroup , BIT_4);
-		vTaskDelay(100);
+		vTaskDelay(DELAY_100_MS);
 	}	
 }
 
@@ -208,48 +220,48 @@ void uartConsumerTask(void * pvParameters)
             pdTRUE,        
             pdFALSE,      
             0);
-		  if((eventOfEdge & BIT_0) != 0)
+		  if((eventOfEdge & BIT_0) != FLAG_RESTORE)
 			{
-				 eventOfEdge = 0;
-				 xQueueSend( uartQueue,btnOneFallingEdge.messageData, ( TickType_t ) 100);
+				 eventOfEdge = FLAG_RESTORE;
+				 xQueueSend( uartQueue,btnOneFallingEdge.messageData, ( TickType_t ) WAITING_TICKS);
 			}
-			else if((eventOfEdge & BIT_1) != 0)
+			else if((eventOfEdge & BIT_1) != FLAG_RESTORE)
 			{
-				eventOfEdge = 0;
-				xQueueSend( uartQueue,btnOneRisingEdge.messageData, ( TickType_t ) 100);
+				eventOfEdge = FLAG_RESTORE;
+				xQueueSend( uartQueue,btnOneRisingEdge.messageData, ( TickType_t ) WAITING_TICKS);
 			}
-			else if((eventOfEdge & BIT_2) != 0)
+			else if((eventOfEdge & BIT_2) != FLAG_RESTORE)
 			{
-				eventOfEdge = 0;
-				xQueueSend( uartQueue,btnTwoFallingEdge.messageData, ( TickType_t ) 100);
+				eventOfEdge = FLAG_RESTORE;
+				xQueueSend( uartQueue,btnTwoFallingEdge.messageData, ( TickType_t ) WAITING_TICKS);
 			}
-			else if((eventOfEdge & BIT_3) != 0)
+			else if((eventOfEdge & BIT_3) != FLAG_RESTORE)
 			{
-				eventOfEdge = 0;
-				xQueueSend( uartQueue,btnTwoRisingEdge.messageData, ( TickType_t ) 100);
+				eventOfEdge = FLAG_RESTORE;
+				xQueueSend( uartQueue,btnTwoRisingEdge.messageData, ( TickType_t ) WAITING_TICKS);
 			}
-			else if((eventOfEdge & BIT_4) != 0)
+			else if((eventOfEdge & BIT_4) != FLAG_RESTORE)
 			{
-				eventOfEdge = 0;
-				xQueueSend( uartQueue,stringOf100MsTask.messageData, ( TickType_t ) 100);
+				eventOfEdge = FLAG_RESTORE;
+				xQueueSend( uartQueue,stringOf100MsTask.messageData, ( TickType_t ) WAITING_TICKS);
 			}
 			else
 			{
 				/* Do Nothing */
 			}
-			vTaskDelay(50);
+			vTaskDelay(DELAY_50_MS);
 	}	
 }
 void uartSendTask(void * pvParameters)
 {
 	for(;;)
 	{
-		const signed char str[27];
+		const signed char str[BUFFER_MAX_SIZE];
 	 if( uartQueue != NULL )
    {
-      if( xQueueReceive( uartQueue,(void *)str,( TickType_t ) 100 ) == pdPASS )
+      if( xQueueReceive( uartQueue,(void *)str,( TickType_t ) WAITING_TICKS ) == pdPASS )
       {
-         while(vSerialPutString(str , sizeof(str) / sizeof(str[0])) == pdFALSE);
+         while(vSerialPutString(str , sizeof(str) / sizeof(str[START_COUNT])) == pdFALSE);
       }
 			else
 			{
@@ -260,7 +272,7 @@ void uartSendTask(void * pvParameters)
 	 {
 		  /* Do Nothing */
 	 }		 
-		vTaskDelay(40);
+		vTaskDelay(DELAY_40_MS);
 	}
 }
 /*
